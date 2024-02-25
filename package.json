@@ -42,7 +42,7 @@
 		"jsdom": "^24.0.0",
 		"markuplint": "^4.0.0",
 		"msw": "^2.1.5",
-		"next-router-mock": "^0.9.11",
+		"next-router-mock": "^0.9.12",
 		"vitest": "^1.2.2"
 	},
 	"msw": {

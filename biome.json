@@ -8,7 +8,8 @@
 		"rules": {
 			"recommended": true,
 			"nursery": {
-				"noUnusedImports": "warn"
+				"noUnusedImports": "warn",
+				"useImportRestrictions": "warn"
 			}
 		}
 	},

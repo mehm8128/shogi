@@ -28,7 +28,7 @@
     "@biomejs/biome": "1.5.3",
     "@kuma-ui/next-plugin": "^1.2.0",
     "@markuplint/jsx-parser": "^4.0.0",
-    "@markuplint/react-spec": "^4.0.0",
+    "@markuplint/react-spec": "^4.1.0",
     "@storybook/addon-essentials": "^7.6.17",
     "@storybook/addon-interactions": "^7.6.17",
     "@storybook/nextjs": "^7.6.17",

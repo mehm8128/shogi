@@ -41,8 +41,8 @@ devDependencies:
     specifier: ^4.0.0
     version: 4.0.0(typescript@5.3.3)
   '@markuplint/react-spec':
-    specifier: ^4.0.0
-    version: 4.0.0
+    specifier: ^4.1.0
+    version: 4.1.0
   '@storybook/addon-essentials':
     specifier: ^7.6.17
     version: 7.6.17(@types/react-dom@18.2.18)(@types/react@18.2.52)(react-dom@18.2.0)(react@18.2.0)
@@ -2312,6 +2312,10 @@ packages:
     resolution: {integrity: sha512-Hm60y5ExWs/jNjTliTZRuk1ZSt5rKbuOILACaTCh4VkWX6H+SWXuIrTaSHcq2Ky59fCwfm72SrfSIT8UcSLCow==}
     dev: true
 
+  /@markuplint/ml-ast@4.0.1:
+    resolution: {integrity: sha512-7ZrgvUyPQ4YmUor+Iv/aHcnEVtktN88TNvmDNokLzMZlBxc5alpoCPAv3cJvU4t+dAgW+1P6SnZ2hVGaJkep6A==}
+    dev: true
+
   /@markuplint/ml-config@4.0.0:
     resolution: {integrity: sha512-n+TEi/UIV3MXCmZPjmuix6P2Q5c54V6bC90FqUGBSNaCNfKt9lZXY9iYI7y/jJxaV8HKwDuRnp9hdHkkJvkfgQ==}
     dependencies:
@@ -2359,6 +2363,18 @@ packages:
       - supports-color
     dev: true
 
+  /@markuplint/ml-spec@4.1.0:
+    resolution: {integrity: sha512-ZKfIozGAlnEv+gMT824yNJEGEG+D6kKcPRSzxspe16k8yvwkSILq+GTeT5adPnLdq7XFkiG4JW2hBAS8QOfiRg==}
+    dependencies:
+      '@markuplint/ml-ast': 4.0.1
+      '@markuplint/types': 4.0.2
+      dom-accessibility-api: 0.6.3
+      is-plain-object: 5.0.0
+      type-fest: 4.10.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@markuplint/parser-utils@4.0.0:
     resolution: {integrity: sha512-2VwOCsCgoC0vF9sBLPmV7m4E8u6DhkIpY7jxuyqmo8u5UMBvFcUnGLJQUgUieQnF/irVgnn1SThnpur+vtBVVA==}
     dependencies:
@@ -2374,10 +2390,10 @@ packages:
       - supports-color
     dev: true
 
-  /@markuplint/react-spec@4.0.0:
-    resolution: {integrity: sha512-1eKG9e9tERggFIDApvMjB/uFakOarlK6FX2iFgld4nERAFQIIOPAXiPfDw8ZFcPB2VKfH42BK8DqhP9jcLCs4g==}
+  /@markuplint/react-spec@4.1.0:
+    resolution: {integrity: sha512-zCEbDa07LysXrWYhkTjVtKGhjJ87RMJhxRD3Y352qT9o2DwMPUD3iM6U/vTBqKbiK4f/GA7GZpQRaud3d/KrGQ==}
     dependencies:
-      '@markuplint/ml-spec': 4.0.0
+      '@markuplint/ml-spec': 4.1.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2423,6 +2439,22 @@ packages:
     resolution: {integrity: sha512-PQTgJ3XGthFadXGIlQkQLhTSyIFUmqzgzlRmR2UAagJnTNRBSS+kHUnTRZ1EvQWlU7VzkRauEgC9h3qcUETYUA==}
     dependencies:
       '@types/css-tree': 2.3.5
+      '@types/debug': 4.1.12
+      '@types/whatwg-mimetype': 3.0.2
+      bcp-47: 2.1.0
+      css-tree: 2.3.1
+      debug: 4.3.4
+      leven: 4.0.0
+      type-fest: 4.10.2
+      whatwg-mimetype: 4.0.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@markuplint/types@4.0.2:
+    resolution: {integrity: sha512-Us/OPFOzqsIWLPY9KVhIYk55INo1k8JYggL/6Hk5XhjEGVKdoR2hfn4iDPnkFS3RrClr3mw9ClNwCozC19KGaA==}
+    dependencies:
+      '@types/css-tree': 2.3.6
       '@types/debug': 4.1.12
       '@types/whatwg-mimetype': 3.0.2
       bcp-47: 2.1.0
@@ -4415,6 +4447,10 @@ packages:
 
   /@types/css-tree@2.3.5:
     resolution: {integrity: sha512-TtXNeuMuwBH5LnAYmjMxre0/CNBfwaNN9VTiW8DlWTfopKYZRWYzBYIp7y3YIvobBrc7JjnKsa0F8V/tO//laQ==}
+    dev: true
+
+  /@types/css-tree@2.3.6:
+    resolution: {integrity: sha512-TMZiGQ0PzBDlOLQ4qVz8+GGVhVGAPqMAHbXxDkmxjTexB/4rWeeK8N3IvdJXmR3lvio2MYnnn72DzgnHYu9mSA==}
     dev: true
 
   /@types/debug@4.1.12:

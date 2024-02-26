@@ -35,7 +35,6 @@ export const filterByCollision = (
 
 		// 自分の駒にぶつかったら1つ前までに移動できる
 		if (piece.own === own) {
-			console.log(canMoveTo.indexOf(coordinate))
 			return canMoveTo.slice(0, canMoveTo.indexOf(coordinate))
 		}
 		// 相手の駒にぶつかったらその駒まで移動できる

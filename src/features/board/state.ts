@@ -8,7 +8,7 @@ import { canMoveLance } from '@/features/piece/pieces/lance'
 import { canMovePawn } from '@/features/piece/pieces/pawn'
 import { canMoveRook } from '@/features/piece/pieces/rook'
 import { canMoveSilver } from '@/features/piece/pieces/silver'
-import { Coordinate, PieceWithCoordinate } from '@/features/piece/schema'
+import { Coordinate, Piece, PieceWithCoordinate } from '@/features/piece/schema'
 import { currentPlayerAtom } from '@/features/player/state'
 import { atom } from 'jotai'
 
@@ -46,14 +46,53 @@ export const setBoardAtom = atom(null, (get, set, newCoodinate: Coordinate) => {
 
 			// 移動先に選択中の駒を移動する
 			if (x === newCoodinate.x && y === newCoodinate.y) {
-				return selectedPiece
+				return { type: selectedPiece.type, own: selectedPiece.own }
 			}
 
 			return piece
 		})
 	)
-	set(currentBoardAtom, { board: newBoard })
+
+	// 相手の駒がいたら駒を取る
+	const targetPiece = currentBoard.board[newCoodinate.y][newCoodinate.x]
+	if (targetPiece.own !== null) {
+		if (selectedPiece.own === 'black') {
+			set(addPiecesBlackHavingAtom, {
+				type: targetPiece.type,
+				own: 'black'
+			})
+		} else {
+			set(addPiecesWhiteHavingAtom, {
+				type: targetPiece.type,
+				own: 'white'
+			})
+		}
+	}
+
+	set(currentBoardAtom, {
+		...currentBoard,
+		board: newBoard
+	})
 })
+
+export const piecesBlackHavingAtom = atom<Piece[]>([])
+export const addPiecesBlackHavingAtom = atom<null, Piece[], void>(
+	null,
+	(get, set, newPiece: Piece) => {
+		const currentPiecesBlackHaving = get(piecesBlackHavingAtom)
+		const piecesBlackHaving = [...currentPiecesBlackHaving, newPiece]
+		set(piecesBlackHavingAtom, piecesBlackHaving)
+	}
+)
+export const piecesWhiteHavingAtom = atom<Piece[]>([])
+export const addPiecesWhiteHavingAtom = atom<null, Piece[], void>(
+	null,
+	(get, set, newPiece: Piece) => {
+		const currentPiecesWhiteHaving = get(piecesWhiteHavingAtom)
+		const piecesWhiteHaving = [...currentPiecesWhiteHaving, newPiece]
+		set(piecesWhiteHavingAtom, piecesWhiteHaving)
+	}
+)
 
 export const selectedPieceAtom = atom<PieceWithCoordinate | null>(null)
 export const canBeMovedCoordinatesAtom = atom(get => {

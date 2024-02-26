@@ -1,8 +1,8 @@
 import { Player, PlayerType } from '@/features/player/schema'
 import { atom } from 'jotai'
 
-export const blackPlayerAtom = atom<Player>({ type: 'black', piecesInHand: [] })
-export const whitePlayerAtom = atom<Player>({ type: 'white', piecesInHand: [] })
+export const blackPlayerAtom = atom<Player>({ type: 'black' })
+export const whitePlayerAtom = atom<Player>({ type: 'white' })
 
 export const currentPlayerAtom = atom<PlayerType>('black')
 export const changeCurrentPlayerAtom = atom(null, (get, set) => {

@@ -74,14 +74,14 @@ export default function Square({
 				w="100%"
 				h="100%"
 				className={
-					(selectedPiece === null && piece.own === currentPlayer) ||
+					piece.own === currentPlayer ||
 					(selectedPiece !== null && (canBeMoved || selected))
 						? css`cursor: pointer;`
 						: css`cursor: default;`
 				}
 				onClick={handleClick}
 			>
-				<PieceComp piece={piece} coordinate={coordinate} />
+				<PieceComp piece={piece} />
 				{coordinate.x},{coordinate.y}
 			</Button>
 		</VStack>

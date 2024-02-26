@@ -10,6 +10,7 @@ export default function Board() {
 		<Grid
 			gridTemplateColumns="repeat(9, 80px)"
 			gridTemplateRows="repeat(9, 80px)"
+			userSelect="none"
 		>
 			{board.board.map((pieces, y) =>
 				pieces.map((piece, x) => (

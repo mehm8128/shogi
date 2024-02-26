@@ -1,11 +1,8 @@
-import { Coordinate, Piece as PieceType } from '@/features/piece/schema'
+import { Piece as PieceType } from '@/features/piece/schema'
 import { pieceTypeToJp } from '@/features/piece/selector'
 import { VStack } from '@kuma-ui/core'
 
-export default function Piece({
-	piece,
-	coordinate
-}: { piece: PieceType; coordinate: Coordinate }) {
+export default function Piece({ piece }: { piece: PieceType }) {
 	return (
 		<VStack
 			as="span"

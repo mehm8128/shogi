@@ -14,9 +14,9 @@ export type PieceType =
 export type PieceTypeNonNullable = Exclude<PieceType, null>
 
 export interface Piece {
-		type: PieceType
-		own: PlayerType | null
-	}
+	type: PieceType
+	own: PlayerType | null
+}
 export interface PieceWithCoordinate extends Piece {
 	coordinate: Coordinate
 }

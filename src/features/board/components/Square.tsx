@@ -1,11 +1,12 @@
 import {
 	canBeMovedCoordinatesAtom,
-	selectedPieceAtom
+	selectedPieceAtom,
+	setBoardAtom
 } from '@/features/board/state'
 import PieceComp from '@/features/piece/components/Piece'
 import { Coordinate, Piece } from '@/features/piece/schema'
 import { Button, VStack } from '@kuma-ui/core'
-import { useAtom, useAtomValue } from 'jotai'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 
 export default function Square({
 	piece,
@@ -13,13 +14,30 @@ export default function Square({
 }: { piece: Piece; coordinate: Coordinate }) {
 	const [selectedPiece, setSelectedPiece] = useAtom(selectedPieceAtom)
 	const _canBeMoved = useAtomValue(canBeMovedCoordinatesAtom)
+	const setBoard = useSetAtom(setBoardAtom)
 
-	const seleceted =
+	const selected =
 		selectedPiece?.coordinate.x === coordinate.x &&
 		selectedPiece?.coordinate.y === coordinate.y
 	const canBeMoved = _canBeMoved.some(
 		c => c.x === coordinate.x && c.y === coordinate.y
 	)
+
+	const handleClick = () => {
+		// 駒の選択を解除
+		if (selected) {
+			setSelectedPiece(null)
+			return
+		}
+		// 駒を移動
+		if (canBeMoved) {
+			setBoard(coordinate)
+			setSelectedPiece(null)
+			return
+		}
+		// 駒を選択
+		setSelectedPiece({ ...piece, coordinate: coordinate })
+	}
 
 	return (
 		<VStack
@@ -28,9 +46,7 @@ export default function Square({
 			height={80}
 			justifyContent="center"
 			alignItems="center"
-			backgroundColor={
-				seleceted ? 'yellow' : canBeMoved ? 'blue' : 'tranparent'
-			}
+			backgroundColor={selected ? 'yellow' : canBeMoved ? 'blue' : 'tranparent'}
 		>
 			<Button
 				backgroundColor="transparent"
@@ -40,7 +56,7 @@ export default function Square({
 				border="none"
 				w="100%"
 				h="100%"
-				onClick={() => setSelectedPiece({ ...piece, coordinate: coordinate })}
+				onClick={handleClick}
 			>
 				<PieceComp piece={piece} Coordinate={coordinate} />
 				{coordinate.x},{coordinate.y}

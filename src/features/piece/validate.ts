@@ -16,23 +16,26 @@ export const isInsideOfBoardAndNotOwnPiece = (
 ) =>
 	canMoveTo
 		.filter(isInsideOfBoard)
-		.filter(coordinate => board.board[coordinate.x][coordinate.y].own !== own) // 移動先に自分の駒がないかどうか
+		.filter(coordinate => board.board[coordinate.y][coordinate.x].own !== own) // 移動先に自分の駒がないかどうか
 
 export const filterByCollision = (
 	canMoveTo: Coordinate[],
 	own: PlayerType,
 	board: Board
 ) => {
-	for (const coordinate of canMoveTo) {
+	// 先にisInsideOfBoardAndNotOwnPieceでフィルタリングしておく
+	for (const coordinate of canMoveTo.filter(isInsideOfBoard)) {
 		// 移動先の駒
-		const piece = board.board[coordinate.x][coordinate.y]
+		const piece = board.board[coordinate.y][coordinate.x]
 
 		// まだ進める
-		if (piece === null) {
+		if (piece.own === null) {
 			continue
 		}
+
 		// 自分の駒にぶつかったら1つ前までに移動できる
 		if (piece.own === own) {
+			console.log(canMoveTo.indexOf(coordinate))
 			return canMoveTo.slice(0, canMoveTo.indexOf(coordinate))
 		}
 		// 相手の駒にぶつかったらその駒まで移動できる

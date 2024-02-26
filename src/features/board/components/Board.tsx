@@ -13,10 +13,10 @@ export default function Board() {
 			gridTemplateColumns="repeat(9, 80px)"
 			gridTemplateRows="repeat(9, 80px)"
 		>
-			{board.board.map((pieces, x) =>
-				pieces.map((piece, y) => (
+			{board.board.map((pieces, y) =>
+				pieces.map((piece, x) => (
 					// biome-ignore lint/suspicious/noArrayIndexKey: 座標がkeyに直結している
-					<Square key={`${x}${y}`} piece={piece} Coordinate={{ x, y }} />
+					<Square key={`${x}${y}`} piece={piece} coordinate={{ x, y }} />
 				))
 			)}
 		</Grid>

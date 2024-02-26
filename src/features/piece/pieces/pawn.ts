@@ -14,7 +14,6 @@ export const canMovePawn = (
 	board: Board
 ) => {
 	const canMoveTo = [{ x: current.x, y: current.y - 1 }]
-
 	const canMoveToFiltered = isInsideOfBoardAndNotOwnPiece(canMoveTo, own, board)
 
 	return canMoveToFiltered

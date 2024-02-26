@@ -1,9 +1,6 @@
 import { Board } from '@/features/board/schema'
 import { Coordinate } from '@/features/piece/schema'
-import {
-	filterByCollision,
-	isInsideOfBoardAndNotOwnPiece
-} from '@/features/piece/validate'
+import { filterByCollision } from '@/features/piece/validate'
 import { PlayerType } from '@/features/player/schema'
 
 /**
@@ -13,7 +10,7 @@ import { PlayerType } from '@/features/player/schema'
  * x o x o x
  * . x x x .
  */
-export const canMoveRook = (
+export const canMoveBishop = (
 	current: Coordinate,
 	own: PlayerType,
 	board: Board
@@ -66,15 +63,15 @@ export const canMoveRook = (
 		canMoveToBottomRight
 	]
 
-	const canMoveToFilteredByCollision = canMoveToList.flatMap(canMoveTo =>
+	const canMoveToFiltered = canMoveToList.flatMap(canMoveTo =>
 		filterByCollision(canMoveTo, own, board)
 	)
 
-	const canMoveToFiltered = isInsideOfBoardAndNotOwnPiece(
-		canMoveToFilteredByCollision,
+	const canMoveToFilteredByCollision = filterByCollision(
+		canMoveToFiltered,
 		own,
 		board
 	)
 
-	return canMoveToFiltered
+	return canMoveToFilteredByCollision
 }

@@ -9,6 +9,7 @@ import { canMovePawn } from '@/features/piece/pieces/pawn'
 import { canMoveRook } from '@/features/piece/pieces/rook'
 import { canMoveSilver } from '@/features/piece/pieces/silver'
 import { Coordinate, PieceWithCoordinate } from '@/features/piece/schema'
+import { currentPlayerAtom } from '@/features/player/state'
 import { atom } from 'jotai'
 
 export const currentBoardAtom = atom(
@@ -58,26 +59,27 @@ export const selectedPieceAtom = atom<PieceWithCoordinate | null>(null)
 export const canBeMovedCoordinatesAtom = atom(get => {
 	const selectedPiece = get(selectedPieceAtom)
 	const board = get(currentBoardAtom)
+	const currentPlayer = get(currentPlayerAtom)
 
 	if (selectedPiece === null || selectedPiece.type === null) return []
 
 	switch (selectedPiece.type) {
 		case 'king':
-			return canMoveKing(selectedPiece.coordinate, 'black', board)
+			return canMoveKing(selectedPiece.coordinate, currentPlayer, board)
 		case 'rook':
-			return canMoveRook(selectedPiece.coordinate, 'black', board)
+			return canMoveRook(selectedPiece.coordinate, currentPlayer, board)
 		case 'bishop':
-			return canMoveBishop(selectedPiece.coordinate, 'black', board)
+			return canMoveBishop(selectedPiece.coordinate, currentPlayer, board)
 		case 'gold':
-			return canMoveGold(selectedPiece.coordinate, 'black', board)
+			return canMoveGold(selectedPiece.coordinate, currentPlayer, board)
 		case 'silver':
-			return canMoveSilver(selectedPiece.coordinate, 'black', board)
+			return canMoveSilver(selectedPiece.coordinate, currentPlayer, board)
 		case 'knight':
-			return canMoveKnight(selectedPiece.coordinate, 'black', board)
+			return canMoveKnight(selectedPiece.coordinate, currentPlayer, board)
 		case 'lance':
-			return canMoveLance(selectedPiece.coordinate, 'black', board)
+			return canMoveLance(selectedPiece.coordinate, currentPlayer, board)
 		case 'pawn':
-			return canMovePawn(selectedPiece.coordinate, 'black', board)
+			return canMovePawn(selectedPiece.coordinate, currentPlayer, board)
 		default:
 			throw new Error(`invalid piece: ${selectedPiece.type satisfies never}`)
 	}

@@ -13,9 +13,10 @@ export const canMoveKnight = (
 	own: PlayerType,
 	board: Board
 ) => {
+	const offset = own === 'black' ? 1 : -1
 	const canMoveTo = [
-		{ x: current.x + 1, y: current.y - 2 },
-		{ x: current.x - 1, y: current.y - 2 }
+		{ x: current.x + offset, y: current.y - 2 * offset },
+		{ x: current.x - offset, y: current.y - 2 * offset }
 	]
 
 	const canMoveToFiltered = isInsideOfBoardAndNotOwnPiece(canMoveTo, own, board)

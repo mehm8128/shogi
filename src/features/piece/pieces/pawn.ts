@@ -13,7 +13,9 @@ export const canMovePawn = (
 	own: PlayerType,
 	board: Board
 ) => {
-	const canMoveTo = [{ x: current.x, y: current.y - 1 }]
+	const offset = own === 'black' ? 1 : -1
+	const canMoveTo = [{ x: current.x, y: current.y - offset }]
+
 	const canMoveToFiltered = isInsideOfBoardAndNotOwnPiece(canMoveTo, own, board)
 
 	return canMoveToFiltered

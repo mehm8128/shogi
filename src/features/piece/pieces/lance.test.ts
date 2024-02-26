@@ -18,5 +18,19 @@ describe('lance', () => {
 				)
 			).toEqual(expected)
 		})
+		test('香車が動けるマスを返す(後手)', () => {
+			const current = { x: 4, y: 4 }
+			const own = 'white'
+			const expected = [
+				{ x: 4, y: 5 },
+				{ x: 4, y: 6 }
+			].toSorted(compareCoordinates)
+
+			expect(
+				canMoveLance(current, own, { board: initBoard }).toSorted(
+					compareCoordinates
+				)
+			).toEqual(expected)
+		})
 	})
 })

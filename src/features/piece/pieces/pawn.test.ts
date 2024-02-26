@@ -15,5 +15,16 @@ describe('pawn', () => {
 				)
 			).toEqual(expected)
 		})
+		test('歩兵が動けるマスを返す(後手)', () => {
+			const current = { x: 4, y: 4 }
+			const own = 'white'
+			const expected = [{ x: 4, y: 5 }].toSorted(compareCoordinates)
+
+			expect(
+				canMovePawn(current, own, { board: initBoard }).toSorted(
+					compareCoordinates
+				)
+			).toEqual(expected)
+		})
 	})
 })

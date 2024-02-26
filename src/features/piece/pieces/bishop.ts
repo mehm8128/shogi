@@ -18,46 +18,31 @@ export const canMoveBishop = (
 	own: PlayerType,
 	board: Board
 ) => {
-	const canMoveToTopLeft = [
-		{ x: current.x - 1, y: current.y - 1 },
-		{ x: current.x - 2, y: current.y - 2 },
-		{ x: current.x - 3, y: current.y - 3 },
-		{ x: current.x - 4, y: current.y - 4 },
-		{ x: current.x - 5, y: current.y - 5 },
-		{ x: current.x - 6, y: current.y - 6 },
-		{ x: current.x - 7, y: current.y - 7 },
-		{ x: current.x - 8, y: current.y - 8 }
-	]
-	const canMoveToTopRight = [
-		{ x: current.x + 1, y: current.y - 1 },
-		{ x: current.x + 2, y: current.y - 2 },
-		{ x: current.x + 3, y: current.y - 3 },
-		{ x: current.x + 4, y: current.y - 4 },
-		{ x: current.x + 5, y: current.y - 5 },
-		{ x: current.x + 6, y: current.y - 6 },
-		{ x: current.x + 7, y: current.y - 7 },
-		{ x: current.x + 8, y: current.y - 8 }
-	]
-	const canMoveToBottomLeft = [
-		{ x: current.x - 1, y: current.y + 1 },
-		{ x: current.x - 2, y: current.y + 2 },
-		{ x: current.x - 3, y: current.y + 3 },
-		{ x: current.x - 4, y: current.y + 4 },
-		{ x: current.x - 5, y: current.y + 5 },
-		{ x: current.x - 6, y: current.y + 6 },
-		{ x: current.x - 7, y: current.y + 7 },
-		{ x: current.x - 8, y: current.y + 8 }
-	]
-	const canMoveToBottomRight = [
-		{ x: current.x + 1, y: current.y + 1 },
-		{ x: current.x + 2, y: current.y + 2 },
-		{ x: current.x + 3, y: current.y + 3 },
-		{ x: current.x + 4, y: current.y + 4 },
-		{ x: current.x + 5, y: current.y + 5 },
-		{ x: current.x + 6, y: current.y + 6 },
-		{ x: current.x + 7, y: current.y + 7 },
-		{ x: current.x + 8, y: current.y + 8 }
-	]
+	const offset = own === 'black' ? 1 : -1
+	const canMoveToTopLeft = Array(8)
+		.fill(0)
+		.map((_, i) => ({
+			x: current.x - (i + 1) * offset,
+			y: current.y - (i + 1) * offset
+		}))
+	const canMoveToTopRight = Array(8)
+		.fill(0)
+		.map((_, i) => ({
+			x: current.x + (i + 1) * offset,
+			y: current.y - (i + 1) * offset
+		}))
+	const canMoveToBottomLeft = Array(8)
+		.fill(0)
+		.map((_, i) => ({
+			x: current.x - (i + 1) * offset,
+			y: current.y + (i + 1) * offset
+		}))
+	const canMoveToBottomRight = Array(8)
+		.fill(0)
+		.map((_, i) => ({
+			x: current.x + (i + 1) * offset,
+			y: current.y + (i + 1) * offset
+		}))
 
 	const canMoveToList = [
 		canMoveToTopLeft,

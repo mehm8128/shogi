@@ -5,7 +5,11 @@ import {
 } from '@/features/board/state'
 import PieceComp from '@/features/piece/components/Piece'
 import { Coordinate, Piece } from '@/features/piece/schema'
-import { Button, VStack } from '@kuma-ui/core'
+import {
+	changeCurrentPlayerAtom,
+	currentPlayerAtom
+} from '@/features/player/state'
+import { Button, VStack, css } from '@kuma-ui/core'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 
 export default function Square({
@@ -15,6 +19,8 @@ export default function Square({
 	const [selectedPiece, setSelectedPiece] = useAtom(selectedPieceAtom)
 	const _canBeMoved = useAtomValue(canBeMovedCoordinatesAtom)
 	const setBoard = useSetAtom(setBoardAtom)
+	const currentPlayer = useAtomValue(currentPlayerAtom)
+	const changeCurrentPlayer = useSetAtom(changeCurrentPlayerAtom)
 
 	const selected =
 		selectedPiece?.coordinate.x === coordinate.x &&
@@ -24,15 +30,20 @@ export default function Square({
 	)
 
 	const handleClick = () => {
-		// 駒の選択を解除
 		if (selected) {
+			// 駒の選択を解除
 			setSelectedPiece(null)
 			return
 		}
-		// 駒を移動
 		if (canBeMoved) {
+			// 駒を移動
 			setBoard(coordinate)
 			setSelectedPiece(null)
+			changeCurrentPlayer()
+			return
+		}
+
+		if (piece.own !== currentPlayer) {
 			return
 		}
 		// 駒を選択
@@ -46,7 +57,13 @@ export default function Square({
 			height={80}
 			justifyContent="center"
 			alignItems="center"
-			backgroundColor={selected ? 'yellow' : canBeMoved ? 'blue' : 'tranparent'}
+			className={
+				selected
+					? css`background-color: yellow;`
+					: canBeMoved
+					  ? css`background-color: blue;`
+					  : css`background-color: transparent;`
+			}
 		>
 			<Button
 				backgroundColor="transparent"
@@ -56,9 +73,15 @@ export default function Square({
 				border="none"
 				w="100%"
 				h="100%"
+				className={
+					(selectedPiece === null && piece.own === currentPlayer) ||
+					(selectedPiece !== null && (canBeMoved || selected))
+						? css`cursor: pointer;`
+						: css`cursor: default;`
+				}
 				onClick={handleClick}
 			>
-				<PieceComp piece={piece} Coordinate={coordinate} />
+				<PieceComp piece={piece} coordinate={coordinate} />
 				{coordinate.x},{coordinate.y}
 			</Button>
 		</VStack>

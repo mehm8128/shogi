@@ -1,5 +1,3 @@
-'use client'
-
 import Square from '@/features/board/components/Square'
 import { currentBoardAtom } from '@/features/board/state'
 import { Grid } from '@kuma-ui/core'

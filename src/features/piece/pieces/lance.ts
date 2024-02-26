@@ -16,16 +16,10 @@ export const canMoveLance = (
 	own: PlayerType,
 	board: Board
 ) => {
-	const canMoveTo = [
-		{ x: current.x, y: current.y - 1 },
-		{ x: current.x, y: current.y - 2 },
-		{ x: current.x, y: current.y - 3 },
-		{ x: current.x, y: current.y - 4 },
-		{ x: current.x, y: current.y - 5 },
-		{ x: current.x, y: current.y - 6 },
-		{ x: current.x, y: current.y - 7 },
-		{ x: current.x, y: current.y - 8 }
-	]
+	const offset = own === 'black' ? 1 : -1
+	const canMoveTo = Array(8)
+		.fill(0)
+		.map((_, i) => ({ x: current.x, y: current.y - (i + 1) * offset }))
 
 	const canMoveToFiltered = filterByCollision(canMoveTo, own, board)
 

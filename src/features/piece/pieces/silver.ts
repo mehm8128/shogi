@@ -13,12 +13,13 @@ export const canMoveSilver = (
 	own: PlayerType,
 	board: Board
 ) => {
+	const offset = own === 'black' ? 1 : -1
 	const canMoveTo = [
-		{ x: current.x + 1, y: current.y + 1 },
-		{ x: current.x + 1, y: current.y - 1 },
-		{ x: current.x, y: current.y - 1 },
-		{ x: current.x - 1, y: current.y + 1 },
-		{ x: current.x - 1, y: current.y - 1 }
+		{ x: current.x + offset, y: current.y + offset },
+		{ x: current.x + offset, y: current.y - offset },
+		{ x: current.x, y: current.y - offset },
+		{ x: current.x - offset, y: current.y + offset },
+		{ x: current.x - offset, y: current.y - offset }
 	]
 
 	const canMoveToFiltered = isInsideOfBoardAndNotOwnPiece(canMoveTo, own, board)

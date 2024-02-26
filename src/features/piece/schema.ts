@@ -1,15 +1,24 @@
+import { PlayerType } from '@/features/player/schema'
+
 export type PieceType =
-	| 'king' // 王将
-	| 'rook' // 飛車
-	| 'bishop' // 角行
-	| 'gold' // 金将
-	| 'silver' // 銀将
-	| 'knight' // 桂馬
-	| 'lance' // 香車
-	| 'pawn' // 歩兵
+	| 'king'
+	| 'rook'
+	| 'bishop'
+	| 'gold'
+	| 'silver'
+	| 'knight'
+	| 'lance'
+	| 'pawn'
+	| null
+
+export type PieceTypeNonNullable = Exclude<PieceType, null>
 
 export interface Piece {
 	type: PieceType
+	own: PlayerType | null
+}
+
+export interface Coordinate {
 	x: number
 	y: number
 }

@@ -1,3 +1,9 @@
+import Board from '@/features/board/components/Board'
+
 export default function Page() {
-	return <main>aaa</main>
+	return (
+		<main>
+			<Board />
+		</main>
+	)
 }

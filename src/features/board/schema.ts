@@ -1,6 +1,5 @@
-import { PieceType } from '@/features/piece/schema'
+import { Piece } from '@/features/piece/schema'
 
-export type SquareType = PieceType | null
 export interface Board {
-	board: SquareType[][]
-}
+		board: Piece[][]
+	}

@@ -1,6 +1,9 @@
 import { Board } from '@/features/board/schema'
 import { Coordinate } from '@/features/piece/schema'
-import { filterByCollision } from '@/features/piece/validate'
+import {
+	filterByCollision,
+	isInsideOfBoardAndNotOwnPiece
+} from '@/features/piece/validate'
 import { PlayerType } from '@/features/player/schema'
 
 /**
@@ -67,7 +70,7 @@ export const canMoveBishop = (
 		filterByCollision(canMoveTo, own, board)
 	)
 
-	const canMoveToFilteredByCollision = filterByCollision(
+	const canMoveToFilteredByCollision = isInsideOfBoardAndNotOwnPiece(
 		canMoveToFiltered,
 		own,
 		board

@@ -3,7 +3,7 @@ import { Coordinate } from '@/features/piece/schema'
 import { PlayerType } from '@/features/player/schema'
 
 // 駒が盤内にあるかどうか
-const isInsideOfBoard = (coordinate: Coordinate) =>
+export const isInsideOfBoard = (coordinate: Coordinate) =>
 	coordinate.x >= 0 &&
 	coordinate.x <= 8 &&
 	coordinate.y >= 0 &&

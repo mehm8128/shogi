@@ -123,3 +123,34 @@ export const canBeMovedCoordinatesAtom = atom(get => {
 			throw new Error(`invalid piece: ${selectedPiece.type satisfies never}`)
 	}
 })
+
+export const selectedHavingPieceAtom = atom<Piece | null>(null)
+export const releaseHavingPieceAtom = atom(
+	null,
+	(get, set, coordinate: Coordinate) => {
+		const currentBoard = get(currentBoardAtom)
+		const selectedHavingPiece = get(selectedHavingPieceAtom)
+		if (selectedHavingPiece === null) {
+			throw new Error('selectedHavingPiece is null')
+		}
+
+		const newBoard = currentBoard.board.map((row, y) =>
+			row.map((piece, x) => {
+				// 選択中の駒を置く
+				if (x === coordinate.x && y === coordinate.y) {
+					return {
+						type: selectedHavingPiece.type,
+						own: selectedHavingPiece.own
+					}
+				}
+
+				return piece
+			})
+		)
+
+		set(currentBoardAtom, {
+			...currentBoard,
+			board: newBoard
+		})
+	}
+)

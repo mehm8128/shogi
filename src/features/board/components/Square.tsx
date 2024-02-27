@@ -1,5 +1,9 @@
 import {
 	canBeMovedCoordinatesAtom,
+	piecesBlackHavingAtom,
+	piecesWhiteHavingAtom,
+	releaseHavingPieceAtom,
+	selectedHavingPieceAtom,
 	selectedPieceAtom,
 	setBoardAtom
 } from '@/features/board/state'
@@ -17,10 +21,20 @@ export default function Square({
 	coordinate
 }: { piece: Piece; coordinate: Coordinate }) {
 	const [selectedPiece, setSelectedPiece] = useAtom(selectedPieceAtom)
+	const [selectedHavingPiece, setSelectedHavingPiece] = useAtom(
+		selectedHavingPieceAtom
+	)
 	const _canBeMoved = useAtomValue(canBeMovedCoordinatesAtom)
 	const setBoard = useSetAtom(setBoardAtom)
 	const currentPlayer = useAtomValue(currentPlayerAtom)
 	const changeCurrentPlayer = useSetAtom(changeCurrentPlayerAtom)
+	const releaseHavingPiece = useSetAtom(releaseHavingPieceAtom)
+	const [piecesBlackHaving, setPiecesBlackHaving] = useAtom(
+		piecesBlackHavingAtom
+	)
+	const [piecesWhiteHaving, setPiecesWhiteHaving] = useAtom(
+		piecesWhiteHavingAtom
+	)
 
 	const selected =
 		selectedPiece?.coordinate.x === coordinate.x &&
@@ -28,6 +42,7 @@ export default function Square({
 	const canBeMoved = _canBeMoved.some(
 		c => c.x === coordinate.x && c.y === coordinate.y
 	)
+	const canBeReleased = selectedHavingPiece !== null && piece.type === null
 
 	const handleClick = () => {
 		if (selected) {
@@ -42,12 +57,30 @@ export default function Square({
 			changeCurrentPlayer()
 			return
 		}
+		if (canBeReleased) {
+			// 持ち駒を置く
+			releaseHavingPiece(coordinate)
+			setSelectedHavingPiece(null)
+			// TODO: idでの比較をする
+			if (currentPlayer === 'black') {
+				setPiecesBlackHaving(
+					piecesBlackHaving.filter(p => p.type !== selectedHavingPiece.type)
+				)
+			} else {
+				setPiecesWhiteHaving(
+					piecesWhiteHaving.filter(p => p.type !== selectedHavingPiece.type)
+				)
+			}
+			changeCurrentPlayer()
+			return
+		}
 
 		if (piece.own !== currentPlayer) {
 			return
 		}
 		// 駒を選択
 		setSelectedPiece({ ...piece, coordinate: coordinate })
+		setSelectedHavingPiece(null)
 	}
 
 	return (
@@ -60,9 +93,11 @@ export default function Square({
 			className={
 				selected
 					? css`background-color: yellow;`
-					: canBeMoved
-					  ? css`background-color: blue;`
-					  : css`background-color: transparent;`
+					: canBeReleased
+					  ? css`background-color: gray;`
+					  : canBeMoved
+						  ? css`background-color: blue;`
+						  : css`background-color: transparent;`
 			}
 		>
 			<Button
@@ -75,7 +110,8 @@ export default function Square({
 				h="100%"
 				className={
 					piece.own === currentPlayer ||
-					(selectedPiece !== null && (canBeMoved || selected))
+					(selectedPiece !== null && (canBeMoved || selected)) ||
+					(selectedHavingPiece !== null && canBeReleased)
 						? css`cursor: pointer;`
 						: css`cursor: default;`
 				}

@@ -7,7 +7,7 @@ import {
 } from '@/features/board/state'
 import HavingPieces from '@/features/player/components/HavingPieces'
 import { currentPlayerAtom } from '@/features/player/state'
-import { Box, Button, css } from '@kuma-ui/core'
+import { Box, Flex } from '@kuma-ui/core'
 import { useAtomValue } from 'jotai'
 
 export default function Page() {
@@ -16,19 +16,19 @@ export default function Page() {
 	const piecesWhiteHaving = useAtomValue(piecesWhiteHavingAtom)
 
 	return (
-		<main>
-			<Button className={css`cursor: default;`}>{currentPlayer}</Button>
-			<Board />
-			<Box>
+		<Box as="main">
+			<Box>現在の手番: {currentPlayer}</Box>
+			<Flex justifyContent="center">
 				<Box>
-					先手:
-					<HavingPieces havingPieces={piecesBlackHaving} playerType="black" />
-				</Box>
-				<Box>
-					後手:
+					後手
 					<HavingPieces havingPieces={piecesWhiteHaving} playerType="white" />
 				</Box>
-			</Box>
-		</main>
+				<Board />
+				<Flex alignItems="end">
+					先手
+					<HavingPieces havingPieces={piecesBlackHaving} playerType="black" />
+				</Flex>
+			</Flex>
+		</Box>
 	)
 }

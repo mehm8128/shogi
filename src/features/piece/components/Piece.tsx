@@ -12,7 +12,6 @@ export default function Piece({ piece }: { piece: PieceType }) {
 			w="fit-content"
 			className={piece.own === 'white' ? css`transform: rotate(180deg);` : ''}
 		>
-			{piece.id}
 			{pieceTypeToJp(piece.type)}
 		</VStack>
 	)

@@ -41,7 +41,7 @@ export const setBoardAtom = atom(null, (get, set, newCoodinate: Coordinate) => {
 				x === selectedPiece.coordinate.x &&
 				y === selectedPiece.coordinate.y
 			) {
-				return { id: piece.id, type: null, own: null }
+				return { id: crypto.randomUUID(), type: null, own: null }
 			}
 
 			// 移動先に選択中の駒を移動する
@@ -58,13 +58,13 @@ export const setBoardAtom = atom(null, (get, set, newCoodinate: Coordinate) => {
 	if (targetPiece.own !== null) {
 		if (selectedPiece.own === 'black') {
 			set(addPiecesBlackHavingAtom, {
-				id: targetPiece.id,
+				id: crypto.randomUUID(),
 				type: targetPiece.type,
 				own: 'black'
 			})
 		} else {
 			set(addPiecesWhiteHavingAtom, {
-				id: targetPiece.id,
+				id: crypto.randomUUID(),
 				type: targetPiece.type,
 				own: 'white'
 			})

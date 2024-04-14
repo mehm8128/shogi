@@ -44,6 +44,11 @@ export default function Square({
 	)
 	const canBeReleased = selectedHavingPiece !== null && piece.type === null
 
+	const canBeClicked =
+		piece.own === currentPlayer || // 動かせる駒
+		(selectedPiece !== null && (canBeMoved || selected)) || // 動かす駒を選択していて、移動可能なマスか選択中の駒のマス
+		(selectedHavingPiece !== null && canBeReleased) // 持ち駒を選択していて、置かれることができるマス
+
 	const handleClick = () => {
 		if (selected) {
 			// 駒の選択を解除
@@ -100,26 +105,24 @@ export default function Square({
 						  : css`background-color: transparent;`
 			}
 		>
-			<Button
-				backgroundColor="transparent"
-				display="flex"
-				justifyContent="center"
-				alignItems="center"
-				border="none"
-				w="100%"
-				h="100%"
-				className={
-					piece.own === currentPlayer ||
-					(selectedPiece !== null && (canBeMoved || selected)) ||
-					(selectedHavingPiece !== null && canBeReleased)
-						? css`cursor: pointer;`
-						: css`cursor: default;`
-				}
-				onClick={handleClick}
-			>
-				<PieceComp piece={piece} />
-				{coordinate.x},{coordinate.y}
-			</Button>
+			{piece.own !== null && (
+				<Button
+					backgroundColor="transparent"
+					display="flex"
+					justifyContent="center"
+					alignItems="center"
+					border="none"
+					w="100%"
+					h="100%"
+					className={
+						canBeClicked ? css`cursor: pointer;` : css`cursor: default;`
+					}
+					onClick={handleClick}
+				>
+					<PieceComp piece={piece} />
+					{coordinate.x},{coordinate.y}
+				</Button>
+			)}
 		</VStack>
 	)
 }

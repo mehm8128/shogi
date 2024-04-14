@@ -1,4 +1,5 @@
 import { Board } from '@/features/board/schema'
+import { canMoveKing } from '@/features/piece/pieces/king'
 import { Coordinate } from '@/features/piece/schema'
 import { isInsideOfBoardAndNotOwnPiece } from '@/features/piece/validate'
 import { PlayerType } from '@/features/player/schema'
@@ -19,4 +20,12 @@ export const canMovePawn = (
 	const canMoveToFiltered = isInsideOfBoardAndNotOwnPiece(canMoveTo, own, board)
 
 	return canMoveToFiltered
+}
+
+export const canMovePromotedPawn = (
+	current: Coordinate,
+	own: PlayerType,
+	board: Board
+) => {
+	return canMoveKing(current, own, board)
 }

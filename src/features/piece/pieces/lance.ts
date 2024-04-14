@@ -1,4 +1,5 @@
 import { Board } from '@/features/board/schema'
+import { canMoveKing } from '@/features/piece/pieces/king'
 import { Coordinate } from '@/features/piece/schema'
 import {
 	filterByCollision,
@@ -30,4 +31,12 @@ export const canMoveLance = (
 	)
 
 	return canMoveToFilteredByCollision
+}
+
+export const canMovePromotedLance = (
+	current: Coordinate,
+	own: PlayerType,
+	board: Board
+) => {
+	return canMoveKing(current, own, board)
 }

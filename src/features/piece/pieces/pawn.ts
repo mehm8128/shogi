@@ -41,3 +41,16 @@ export const canMovePawn = (
 	}
 	return canMoveNotPromotedPawn(current, own, board)
 }
+
+// 二歩判定
+export const willBeTwoPawns = (
+	board: Board,
+	coordinate: Coordinate,
+	playerType: PlayerType
+) => {
+	return board.board.some(
+		pieces =>
+			pieces[coordinate.x].own === playerType &&
+			pieces[coordinate.x].type === 'pawn'
+	)
+}

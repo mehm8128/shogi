@@ -1,5 +1,7 @@
 import { initBoard } from '@/features/game/const'
+import { PieceWithCoordinate } from '@/features/piece/schema'
 import {
+	canPromote,
 	filterByCollision,
 	isInsideOfBoard,
 	isInsideOfBoardAndNotOwnPiece
@@ -74,6 +76,73 @@ describe('validate', () => {
 					board: initBoard
 				})
 			).toEqual(expected)
+		})
+	})
+	describe('canPromote', () => {
+		test('金のときに成れない', () => {
+			const piece: PieceWithCoordinate = {
+				id: '1',
+				type: 'gold',
+				own: 'black',
+				coordinate: {
+					x: 4,
+					y: 2
+				}
+			}
+
+			expect(canPromote(piece)).toBe(false)
+		})
+		test('先手が4,2に動くときに成れる', () => {
+			const piece: PieceWithCoordinate = {
+				id: '1',
+				type: 'pawn',
+				own: 'black',
+				coordinate: {
+					x: 4,
+					y: 2
+				}
+			}
+
+			expect(canPromote(piece)).toBe(true)
+		})
+		test('先手が8,3に動くときには成れない', () => {
+			const piece: PieceWithCoordinate = {
+				id: '1',
+				type: 'pawn',
+				own: 'black',
+				coordinate: {
+					x: 8,
+					y: 3
+				}
+			}
+
+			expect(canPromote(piece)).toBe(false)
+		})
+		test('後手が4,6に動くときに成れる', () => {
+			const piece: PieceWithCoordinate = {
+				id: '1',
+				type: 'pawn',
+				own: 'white',
+				coordinate: {
+					x: 4,
+					y: 6
+				}
+			}
+
+			expect(canPromote(piece)).toBe(true)
+		})
+		test('後手が1,5に動くときには成れない', () => {
+			const piece: PieceWithCoordinate = {
+				id: '1',
+				type: 'pawn',
+				own: 'white',
+				coordinate: {
+					x: 1,
+					y: 5
+				}
+			}
+
+			expect(canPromote(piece)).toBe(false)
 		})
 	})
 })

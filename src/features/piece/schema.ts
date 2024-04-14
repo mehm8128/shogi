@@ -14,6 +14,7 @@ export type PieceType =
 export type PieceTypeNonNullable = Exclude<PieceType, null>
 
 export interface Piece {
+	id: string | null
 	type: PieceType
 	own: PlayerType | null
 }

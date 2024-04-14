@@ -14,8 +14,7 @@ export default function Board() {
 		>
 			{board.board.map((pieces, y) =>
 				pieces.map((piece, x) => (
-					// biome-ignore lint/suspicious/noArrayIndexKey: 座標がkeyに直結している
-					<Square key={`${x}${y}`} piece={piece} coordinate={{ x, y }} />
+					<Square key={piece.id} piece={piece} coordinate={{ x, y }} />
 				))
 			)}
 		</Grid>

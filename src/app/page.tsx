@@ -35,7 +35,6 @@ export default function Page() {
 				<Box>
 					先手:
 					<Box>
-						{/**TODO: idかなんかをkeyに入れる */}
 						{piecesBlackHaving.map(piece => (
 							<Button
 								className={
@@ -43,6 +42,7 @@ export default function Page() {
 										? css`background-color: yellow;`
 										: css`background-color: transparent;`
 								}
+								key={piece.id}
 								display="flex"
 								justifyContent="center"
 								alignItems="center"
@@ -59,9 +59,6 @@ export default function Page() {
 				<Box>
 					後手:
 					<Box>
-						{/**TODO: idかなんかをkeyに入れる
-						 * idで比較してスタイルをつける
-						 */}
 						{piecesWhiteHaving.map(piece => (
 							<Button
 								className={
@@ -69,6 +66,7 @@ export default function Page() {
 										? css`background-color: yellow;`
 										: css`background-color: transparent;`
 								}
+								key={piece.id}
 								display="flex"
 								justifyContent="center"
 								alignItems="center"

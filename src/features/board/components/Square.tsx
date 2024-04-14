@@ -61,14 +61,14 @@ export default function Square({
 			// 持ち駒を置く
 			releaseHavingPiece(coordinate)
 			setSelectedHavingPiece(null)
-			// TODO: idでの比較をする
+
 			if (currentPlayer === 'black') {
 				setPiecesBlackHaving(
-					piecesBlackHaving.filter(p => p.type !== selectedHavingPiece.type)
+					piecesBlackHaving.filter(p => p.id !== selectedHavingPiece.id)
 				)
 			} else {
 				setPiecesWhiteHaving(
-					piecesWhiteHaving.filter(p => p.type !== selectedHavingPiece.type)
+					piecesWhiteHaving.filter(p => p.id !== selectedHavingPiece.id)
 				)
 			}
 			changeCurrentPlayer()

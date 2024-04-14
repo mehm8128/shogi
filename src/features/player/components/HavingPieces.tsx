@@ -29,7 +29,7 @@ export default function HavingPieces({
 			{havingPieces.map(piece => (
 				<Button
 					className={
-						selectedhavingPiece === piece
+						selectedhavingPiece?.id === piece.id
 							? css`background-color: yellow;`
 							: css`background-color: transparent;`
 					}
@@ -42,6 +42,7 @@ export default function HavingPieces({
 					disabled={currentPlayer === getOppositePlayerType(playerType)}
 					cursor={currentPlayer === playerType ? 'pointer' : 'not-allowed'}
 				>
+					{selectedhavingPiece?.id},{piece.id}
 					<Piece piece={piece} />
 				</Button>
 			))}

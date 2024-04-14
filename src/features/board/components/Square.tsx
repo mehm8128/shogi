@@ -105,24 +105,20 @@ export default function Square({
 						  : css`background-color: transparent;`
 			}
 		>
-			{piece.own !== null && (
-				<Button
-					backgroundColor="transparent"
-					display="flex"
-					justifyContent="center"
-					alignItems="center"
-					border="none"
-					w="100%"
-					h="100%"
-					className={
-						canBeClicked ? css`cursor: pointer;` : css`cursor: default;`
-					}
-					onClick={handleClick}
-				>
-					<PieceComp piece={piece} />
-					{coordinate.x},{coordinate.y}
-				</Button>
-			)}
+			<Button
+				backgroundColor="transparent"
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				border="none"
+				w="100%"
+				h="100%"
+				className={canBeClicked ? css`cursor: pointer;` : css`cursor: default;`}
+				onClick={handleClick}
+			>
+				{piece.own !== null && <PieceComp piece={piece} />}
+				{coordinate.x},{coordinate.y}
+			</Button>
 		</VStack>
 	)
 }

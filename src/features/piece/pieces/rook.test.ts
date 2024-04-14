@@ -1,5 +1,8 @@
 import { initBoard } from '@/features/game/const'
-import { canMovePromotedRook, canMoveRook } from '@/features/piece/pieces/rook'
+import {
+	canMoveNotPromotedRook,
+	canMovePromotedRook
+} from '@/features/piece/pieces/rook'
 import { compareCoordinates } from '@/lib/testUtils'
 
 describe('rook', () => {
@@ -22,7 +25,7 @@ describe('rook', () => {
 			].toSorted(compareCoordinates)
 
 			expect(
-				canMoveRook(current, own, { board: initBoard }).toSorted(
+				canMoveNotPromotedRook(current, own, { board: initBoard }).toSorted(
 					compareCoordinates
 				)
 			).toEqual(expected)
@@ -45,7 +48,7 @@ describe('rook', () => {
 			].toSorted(compareCoordinates)
 
 			expect(
-				canMoveRook(current, own, { board: initBoard }).toSorted(
+				canMoveNotPromotedRook(current, own, { board: initBoard }).toSorted(
 					compareCoordinates
 				)
 			).toEqual(expected)

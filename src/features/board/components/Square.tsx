@@ -1,5 +1,6 @@
 import {
 	canBeMovedCoordinatesAtom,
+	currentBoardAtom,
 	piecesBlackHavingAtom,
 	piecesWhiteHavingAtom,
 	releaseHavingPieceAtom,
@@ -8,6 +9,7 @@ import {
 	setBoardAtom
 } from '@/features/board/state'
 import PieceComp from '@/features/piece/components/Piece'
+import { willBeTwoPawns } from '@/features/piece/pieces/pawn'
 import { Coordinate, Piece } from '@/features/piece/schema'
 import { canPromote } from '@/features/piece/validate'
 import {
@@ -26,6 +28,7 @@ export default function Square({
 		selectedHavingPieceAtom
 	)
 	const _canBeMoved = useAtomValue(canBeMovedCoordinatesAtom)
+	const currentBoard = useAtomValue(currentBoardAtom)
 	const setBoard = useSetAtom(setBoardAtom)
 	const currentPlayer = useAtomValue(currentPlayerAtom)
 	const changeCurrentPlayer = useSetAtom(changeCurrentPlayerAtom)
@@ -43,7 +46,11 @@ export default function Square({
 	const canBeMoved = _canBeMoved.some(
 		c => c.x === coordinate.x && c.y === coordinate.y
 	)
-	const canBeReleased = selectedHavingPiece !== null && piece.type === null
+	const canBeReleased =
+		selectedHavingPiece !== null &&
+		piece.type === null &&
+		selectedHavingPiece.type === 'pawn' &&
+		!willBeTwoPawns(currentBoard, coordinate, currentPlayer) // 二歩判定
 
 	const canBeClicked =
 		piece.own === currentPlayer || // 動かせる駒

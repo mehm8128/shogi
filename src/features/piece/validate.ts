@@ -1,5 +1,5 @@
 import { Board } from '@/features/board/schema'
-import { Coordinate, PieceWithCoordinate } from '@/features/piece/schema'
+import { Coordinate, PieceType } from '@/features/piece/schema'
 import { PlayerType } from '@/features/player/schema'
 
 // 駒が盤内にあるかどうか
@@ -45,14 +45,16 @@ export const filterByCollision = (
 }
 
 export const canPromote = (
-	piece: PieceWithCoordinate // 移動後の座標
+	pieceType: PieceType,
+	coordinate: Coordinate, // 移動後の座標
+	playerType: PlayerType
 ) => {
-	if (piece.type === 'king' || piece.type === 'gold') {
+	if (pieceType === 'king' || pieceType === 'gold') {
 		return false
 	}
 	if (
-		(piece.own === 'black' && piece.coordinate.y < 3) ||
-		(piece.own === 'white' && piece.coordinate.y > 5)
+		(playerType === 'black' && coordinate.y < 3) ||
+		(playerType === 'white' && coordinate.y > 5)
 	) {
 		return true
 	}

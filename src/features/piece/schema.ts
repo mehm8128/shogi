@@ -17,6 +17,7 @@ export interface Piece {
 	id: string | null
 	type: PieceType
 	own: PlayerType | null
+	promoted: boolean
 }
 export interface PieceWithCoordinate extends Piece {
 	coordinate: Coordinate

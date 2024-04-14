@@ -12,7 +12,7 @@ export default function Piece({ piece }: { piece: PieceType }) {
 			w="fit-content"
 			className={piece.own === 'white' ? css`transform: rotate(180deg);` : ''}
 		>
-			{pieceTypeToJp(piece.type)}
+			{pieceTypeToJp(piece.type, piece.promoted)}
 		</VStack>
 	)
 }

@@ -1,5 +1,5 @@
 import { initBoard } from '@/features/game/const'
-import { canMoveLance } from '@/features/piece/pieces/lance'
+import { canMoveNotPromotedLance } from '@/features/piece/pieces/lance'
 import { compareCoordinates } from '@/lib/testUtils'
 
 describe('lance', () => {
@@ -13,7 +13,7 @@ describe('lance', () => {
 			].toSorted(compareCoordinates)
 
 			expect(
-				canMoveLance(current, own, { board: initBoard }).toSorted(
+				canMoveNotPromotedLance(current, own, { board: initBoard }).toSorted(
 					compareCoordinates
 				)
 			).toEqual(expected)
@@ -27,7 +27,7 @@ describe('lance', () => {
 			].toSorted(compareCoordinates)
 
 			expect(
-				canMoveLance(current, own, { board: initBoard }).toSorted(
+				canMoveNotPromotedLance(current, own, { board: initBoard }).toSorted(
 					compareCoordinates
 				)
 			).toEqual(expected)

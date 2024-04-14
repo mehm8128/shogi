@@ -12,7 +12,7 @@ import { PlayerType } from '@/features/player/schema'
  * x o x
  * x L x
  */
-export const canMoveLance = (
+export const canMoveNotPromotedLance = (
 	current: Coordinate,
 	own: PlayerType,
 	board: Board
@@ -39,4 +39,16 @@ export const canMovePromotedLance = (
 	board: Board
 ) => {
 	return canMoveKing(current, own, board)
+}
+
+export const canMoveLance = (
+	current: Coordinate,
+	own: PlayerType,
+	board: Board,
+	promoted: boolean
+) => {
+	if (promoted) {
+		return canMovePromotedLance(current, own, board)
+	}
+	return canMoveNotPromotedLance(current, own, board)
 }

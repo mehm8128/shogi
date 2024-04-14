@@ -1,6 +1,6 @@
 import { initBoard } from '@/features/game/const'
 import {
-	canMoveBishop,
+	canMoveNotPromotedBishop,
 	canMovePromotedBishop
 } from '@/features/piece/pieces/bishop'
 import { compareCoordinates } from '@/lib/testUtils'
@@ -20,7 +20,7 @@ describe('bishop', () => {
 			].toSorted(compareCoordinates)
 
 			expect(
-				canMoveBishop(current, own, { board: initBoard }).toSorted(
+				canMoveNotPromotedBishop(current, own, { board: initBoard }).toSorted(
 					compareCoordinates
 				)
 			).toEqual(expected)
@@ -38,7 +38,7 @@ describe('bishop', () => {
 			].toSorted(compareCoordinates)
 
 			expect(
-				canMoveBishop(current, own, { board: initBoard }).toSorted(
+				canMoveNotPromotedBishop(current, own, { board: initBoard }).toSorted(
 					compareCoordinates
 				)
 			).toEqual(expected)
@@ -91,4 +91,3 @@ describe('bishop', () => {
 		})
 	})
 })
-

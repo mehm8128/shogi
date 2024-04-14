@@ -13,7 +13,7 @@ import { PlayerType } from '@/features/player/schema'
  * x o x o x
  * . x x x .
  */
-export const canMoveBishop = (
+export const canMoveNotPromotedBishop = (
 	current: Coordinate,
 	own: PlayerType,
 	board: Board
@@ -126,4 +126,16 @@ export const canMovePromotedBishop = (
 	)
 
 	return canMoveToFilteredByCollision
+}
+
+export const canMoveBishop = (
+	current: Coordinate,
+	own: PlayerType,
+	board: Board,
+	promoted: boolean
+) => {
+	if (promoted) {
+		return canMovePromotedBishop(current, own, board)
+	}
+	return canMoveNotPromotedBishop(current, own, board)
 }

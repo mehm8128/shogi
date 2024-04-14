@@ -9,6 +9,7 @@ import {
 } from '@/features/board/state'
 import PieceComp from '@/features/piece/components/Piece'
 import { Coordinate, Piece } from '@/features/piece/schema'
+import { canPromote } from '@/features/piece/validate'
 import {
 	changeCurrentPlayerAtom,
 	currentPlayerAtom
@@ -57,7 +58,20 @@ export default function Square({
 		}
 		if (canBeMoved) {
 			// 駒を移動
-			setBoard(coordinate)
+			if (selectedPiece === null) {
+				throw new Error('selectedPiece is null')
+			}
+			let willBePromoted = selectedPiece.promoted
+			if (
+				!willBePromoted &&
+				canPromote(selectedPiece.type, coordinate, currentPlayer)
+			) {
+				const result = confirm('成りますか？')
+				if (result) {
+					willBePromoted = true
+				}
+			}
+			setBoard(coordinate, willBePromoted)
 			setSelectedPiece(null)
 			changeCurrentPlayer()
 			return

@@ -9,7 +9,7 @@ import { PlayerType } from '@/features/player/schema'
  * x P x
  * x x x
  */
-export const canMovePawn = (
+export const canMoveNotPromotedPawn = (
 	current: Coordinate,
 	own: PlayerType,
 	board: Board
@@ -28,4 +28,16 @@ export const canMovePromotedPawn = (
 	board: Board
 ) => {
 	return canMoveKing(current, own, board)
+}
+
+export const canMovePawn = (
+	current: Coordinate,
+	own: PlayerType,
+	board: Board,
+	promoted: boolean
+) => {
+	if (promoted) {
+		return canMovePromotedPawn(current, own, board)
+	}
+	return canMoveNotPromotedPawn(current, own, board)
 }

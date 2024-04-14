@@ -27,55 +27,65 @@ export const currentBoardAtom = atom(
 		set(gameAtom, newGame)
 	}
 )
-export const setBoardAtom = atom(null, (get, set, newCoodinate: Coordinate) => {
-	const currentBoard = get(currentBoardAtom)
-	const selectedPiece = get(selectedPieceAtom)
-	if (selectedPiece === null) {
-		throw new Error('selectedPiece is null')
-	}
-
-	const newBoard = currentBoard.board.map((row, y) =>
-		row.map((piece, x) => {
-			// 移動元をnullにする
-			if (
-				x === selectedPiece.coordinate.x &&
-				y === selectedPiece.coordinate.y
-			) {
-				return { id: crypto.randomUUID(), type: null, own: null }
-			}
-
-			// 移動先に選択中の駒を移動する
-			if (x === newCoodinate.x && y === newCoodinate.y) {
-				return selectedPiece
-			}
-
-			return piece
-		})
-	)
-
-	// 相手の駒がいたら駒を取る
-	const targetPiece = currentBoard.board[newCoodinate.y][newCoodinate.x]
-	if (targetPiece.own !== null) {
-		if (selectedPiece.own === 'black') {
-			set(addPiecesBlackHavingAtom, {
-				id: crypto.randomUUID(),
-				type: targetPiece.type,
-				own: 'black'
-			})
-		} else {
-			set(addPiecesWhiteHavingAtom, {
-				id: crypto.randomUUID(),
-				type: targetPiece.type,
-				own: 'white'
-			})
+export const setBoardAtom = atom(
+	null,
+	(get, set, newCoodinate: Coordinate, willPromote: boolean) => {
+		const currentBoard = get(currentBoardAtom)
+		const selectedPiece = get(selectedPieceAtom)
+		if (selectedPiece === null) {
+			throw new Error('selectedPiece is null')
 		}
-	}
 
-	set(currentBoardAtom, {
-		...currentBoard,
-		board: newBoard
-	})
-})
+		const newBoard = currentBoard.board.map((row, y) =>
+			row.map((piece, x) => {
+				// 移動元をnullにする
+				if (
+					x === selectedPiece.coordinate.x &&
+					y === selectedPiece.coordinate.y
+				) {
+					return {
+						id: crypto.randomUUID(),
+						type: null,
+						own: null,
+						promoted: false
+					}
+				}
+
+				// 移動先に選択中の駒を移動する
+				if (x === newCoodinate.x && y === newCoodinate.y) {
+					return { ...selectedPiece, promoted: willPromote }
+				}
+
+				return piece
+			})
+		)
+
+		// 相手の駒がいたら駒を取る
+		const targetPiece = currentBoard.board[newCoodinate.y][newCoodinate.x]
+		if (targetPiece.own !== null) {
+			if (selectedPiece.own === 'black') {
+				set(addPiecesBlackHavingAtom, {
+					id: crypto.randomUUID(),
+					type: targetPiece.type,
+					own: 'black',
+					promoted: false
+				})
+			} else {
+				set(addPiecesWhiteHavingAtom, {
+					id: crypto.randomUUID(),
+					type: targetPiece.type,
+					own: 'white',
+					promoted: false
+				})
+			}
+		}
+
+		set(currentBoardAtom, {
+			...currentBoard,
+			board: newBoard
+		})
+	}
+)
 
 export const piecesBlackHavingAtom = atom<Piece[]>([])
 export const addPiecesBlackHavingAtom = atom<null, Piece[], void>(
@@ -108,19 +118,49 @@ export const canBeMovedCoordinatesAtom = atom(get => {
 		case 'king':
 			return canMoveKing(selectedPiece.coordinate, currentPlayer, board)
 		case 'rook':
-			return canMoveRook(selectedPiece.coordinate, currentPlayer, board)
+			return canMoveRook(
+				selectedPiece.coordinate,
+				currentPlayer,
+				board,
+				selectedPiece.promoted
+			)
 		case 'bishop':
-			return canMoveBishop(selectedPiece.coordinate, currentPlayer, board)
+			return canMoveBishop(
+				selectedPiece.coordinate,
+				currentPlayer,
+				board,
+				selectedPiece.promoted
+			)
 		case 'gold':
 			return canMoveGold(selectedPiece.coordinate, currentPlayer, board)
 		case 'silver':
-			return canMoveSilver(selectedPiece.coordinate, currentPlayer, board)
+			return canMoveSilver(
+				selectedPiece.coordinate,
+				currentPlayer,
+				board,
+				selectedPiece.promoted
+			)
 		case 'knight':
-			return canMoveKnight(selectedPiece.coordinate, currentPlayer, board)
+			return canMoveKnight(
+				selectedPiece.coordinate,
+				currentPlayer,
+				board,
+				selectedPiece.promoted
+			)
 		case 'lance':
-			return canMoveLance(selectedPiece.coordinate, currentPlayer, board)
+			return canMoveLance(
+				selectedPiece.coordinate,
+				currentPlayer,
+				board,
+				selectedPiece.promoted
+			)
 		case 'pawn':
-			return canMovePawn(selectedPiece.coordinate, currentPlayer, board)
+			return canMovePawn(
+				selectedPiece.coordinate,
+				currentPlayer,
+				board,
+				selectedPiece.promoted
+			)
 		default:
 			throw new Error(`invalid piece: ${selectedPiece.type satisfies never}`)
 	}
@@ -143,7 +183,8 @@ export const releaseHavingPieceAtom = atom(
 					return {
 						id: crypto.randomUUID(),
 						type: selectedHavingPiece.type,
-						own: selectedHavingPiece.own
+						own: selectedHavingPiece.own,
+						promoted: false
 					}
 				}
 

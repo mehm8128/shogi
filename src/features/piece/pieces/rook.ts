@@ -13,7 +13,7 @@ import { PlayerType } from '@/features/player/schema'
  * x x o x x
  * x x . x x
  */
-export const canMoveRook = (
+export const canMoveNotPromotedRook = (
 	current: Coordinate,
 	own: PlayerType,
 	board: Board
@@ -102,4 +102,16 @@ export const canMovePromotedRook = (
 	)
 
 	return canMoveToFilteredByCollision
+}
+
+export const canMoveRook = (
+	current: Coordinate,
+	own: PlayerType,
+	board: Board,
+	promoted: boolean
+) => {
+	if (promoted) {
+		return canMovePromotedRook(current, own, board)
+	}
+	return canMoveNotPromotedRook(current, own, board)
 }

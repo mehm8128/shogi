@@ -9,7 +9,7 @@ import { PlayerType } from '@/features/player/schema'
  * x S x
  * o x o
  */
-export const canMoveSilver = (
+export const canMoveNotPromotedSilver = (
 	current: Coordinate,
 	own: PlayerType,
 	board: Board
@@ -34,4 +34,16 @@ export const canMovePromotedSilver = (
 	board: Board
 ) => {
 	return canMoveKing(current, own, board)
+}
+
+export const canMoveSilver = (
+	current: Coordinate,
+	own: PlayerType,
+	board: Board,
+	promoted: boolean
+) => {
+	if (promoted) {
+		return canMovePromotedSilver(current, own, board)
+	}
+	return canMoveNotPromotedSilver(current, own, board)
 }

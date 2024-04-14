@@ -1,5 +1,5 @@
 import { initBoard } from '@/features/game/const'
-import { canMoveKnight } from '@/features/piece/pieces/knight'
+import { canMoveNotPromotedKnight } from '@/features/piece/pieces/knight'
 import { compareCoordinates } from '@/lib/testUtils'
 
 describe('knight', () => {
@@ -13,7 +13,7 @@ describe('knight', () => {
 			].toSorted(compareCoordinates)
 
 			expect(
-				canMoveKnight(current, own, { board: initBoard }).toSorted(
+				canMoveNotPromotedKnight(current, own, { board: initBoard }).toSorted(
 					compareCoordinates
 				)
 			).toEqual(expected)
@@ -27,7 +27,7 @@ describe('knight', () => {
 			].toSorted(compareCoordinates)
 
 			expect(
-				canMoveKnight(current, own, { board: initBoard }).toSorted(
+				canMoveNotPromotedKnight(current, own, { board: initBoard }).toSorted(
 					compareCoordinates
 				)
 			).toEqual(expected)

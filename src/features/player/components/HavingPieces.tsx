@@ -42,7 +42,6 @@ export default function HavingPieces({
 					disabled={currentPlayer === getOppositePlayerType(playerType)}
 					cursor={currentPlayer === playerType ? 'pointer' : 'not-allowed'}
 				>
-					{selectedhavingPiece?.id},{piece.id}
 					<Piece piece={piece} />
 				</Button>
 			))}

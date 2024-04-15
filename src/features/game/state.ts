@@ -11,5 +11,6 @@ export const gameAtom = atom<Game>({
 	]
 })
 export const currentGameIndexAtom = atom(0)
+export const bocchiModeAtom = atom(false)
 
 export const historiesAtom = atom<History[]>([])

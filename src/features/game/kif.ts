@@ -1,7 +1,7 @@
 import { numberToKanjiMapping } from '@/features/game/schema'
 import { History } from '@/features/game/schema'
 
-export const getKif = (histories: History[]) => {
+export const getKif = (histories: History[], finished: boolean) => {
 	const procedure = histories
 		.map((history, i) => {
 			const before =
@@ -13,7 +13,7 @@ export const getKif = (histories: History[]) => {
 			}${history.pieceType}${history.decorator}${before}`
 		})
 		.join('\n')
-	// const result = `${histories.length + 1} 投了` TODO: 投了したら追加
+	const result = finished ? `${histories.length + 1} 投了\n` : ''
 
-	return `先手: 先手\n後手: 後手\n\n${procedure}\n`
+	return `先手: 先手\n後手: 後手\n\n${procedure}\n${result}`
 }

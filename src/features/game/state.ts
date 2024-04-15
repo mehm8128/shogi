@@ -14,3 +14,4 @@ export const currentGameIndexAtom = atom(0)
 export const bocchiModeAtom = atom(false)
 
 export const historiesAtom = atom<History[]>([])
+export const finishedAtom = atom(false)

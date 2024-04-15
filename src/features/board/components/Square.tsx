@@ -11,7 +11,7 @@ import {
 import PieceComp from '@/features/piece/components/Piece'
 import { willBeTwoPawns } from '@/features/piece/pieces/pawn'
 import { Coordinate, Piece } from '@/features/piece/schema'
-import { canPromote } from '@/features/piece/validate'
+import { canPromote, mustPromote } from '@/features/piece/validate'
 import {
 	changeCurrentPlayerAtom,
 	currentPlayerAtom
@@ -70,9 +70,19 @@ export default function Square({
 				throw new Error('selectedPiece is null')
 			}
 			let willBePromoted = selectedPiece.promoted
+			// 成らないといけない場所に行く場合
+			if (mustPromote(selectedPiece.type, coordinate, currentPlayer)) {
+				willBePromoted = true
+			}
+			// 成れるところに行く場合
 			if (
 				!willBePromoted &&
-				canPromote(selectedPiece.type, coordinate, currentPlayer)
+				canPromote(
+					selectedPiece.type,
+					selectedPiece.coordinate,
+					coordinate,
+					currentPlayer
+				)
 			) {
 				const result = confirm('成りますか？')
 				if (result) {

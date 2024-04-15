@@ -46,17 +46,56 @@ export const filterByCollision = (
 
 export const canPromote = (
 	pieceType: PieceType,
+	before: Coordinate, // 移動前の座標
+	after: Coordinate, // 移動後の座標
+	playerType: PlayerType
+) => {
+	if (pieceType === 'king' || pieceType === 'gold') {
+		return false
+	}
+
+	// 3段目以内に入るときに成れる
+	if (
+		(playerType === 'black' && after.y < 3) ||
+		(playerType === 'white' && after.y > 5)
+	) {
+		return true
+	}
+
+	// 既に3段目以内にいる場合は戻るときに成れる
+	if (
+		(playerType === 'black' && before.y < 3) ||
+		(playerType === 'white' && before.y > 5)
+	) {
+		return true
+	}
+
+	return false
+}
+
+export const mustPromote = (
+	pieceType: PieceType,
 	coordinate: Coordinate, // 移動後の座標
 	playerType: PlayerType
 ) => {
 	if (pieceType === 'king' || pieceType === 'gold') {
 		return false
 	}
-	if (
-		(playerType === 'black' && coordinate.y < 3) ||
-		(playerType === 'white' && coordinate.y > 5)
-	) {
-		return true
+	if (pieceType === 'knight') {
+		if (
+			(playerType === 'black' && coordinate.y < 2) ||
+			(playerType === 'white' && coordinate.y > 6)
+		) {
+			return true
+		}
+	}
+	if (pieceType === 'lance' || pieceType === 'pawn') {
+		if (
+			(playerType === 'black' && coordinate.y === 0) ||
+			(playerType === 'white' && coordinate.y === 8)
+		) {
+			return true
+		}
 	}
 
 	return false

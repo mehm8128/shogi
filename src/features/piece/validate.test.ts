@@ -3,7 +3,8 @@ import {
 	canPromote,
 	filterByCollision,
 	isInsideOfBoard,
-	isInsideOfBoardAndNotOwnPiece
+	isInsideOfBoardAndNotOwnPiece,
+	mustPromote
 } from '@/features/piece/validate'
 
 describe('validate', () => {
@@ -81,52 +82,118 @@ describe('validate', () => {
 		test('金のときに成れない', () => {
 			const type = 'gold'
 			const own = 'black'
-			const coordinate = {
+			const before = {
+				x: 4,
+				y: 3
+			}
+			const after = {
 				x: 4,
 				y: 2
 			}
 
-			expect(canPromote(type, coordinate, own)).toBe(false)
+			expect(canPromote(type, before, after, own)).toBe(false)
 		})
-		test('先手が4,2に動くときに成れる', () => {
+		test('先手の歩兵が4,2に動くときに成れる', () => {
 			const type = 'pawn'
 			const own = 'black'
-			const coordinate = {
+			const before = {
 				x: 4,
 				y: 2
 			}
+			const after = {
+				x: 4,
+				y: 3
+			}
 
-			expect(canPromote(type, coordinate, own)).toBe(true)
+			expect(canPromote(type, before, after, own)).toBe(true)
 		})
-		test('先手が8,3に動くときには成れない', () => {
+		test('先手の歩兵が8,3に動くときには成れない', () => {
 			const type = 'pawn'
 			const own = 'black'
-			const coordinate = {
+			const before = {
+				x: 8,
+				y: 4
+			}
+			const after = {
 				x: 8,
 				y: 3
 			}
 
-			expect(canPromote(type, coordinate, own)).toBe(false)
+			expect(canPromote(type, before, after, own)).toBe(false)
 		})
-		test('後手が4,6に動くときに成れる', () => {
+		test('後手の歩兵が4,6に動くときに成れる', () => {
 			const type = 'pawn'
 			const own = 'white'
-			const coordinate = {
+			const before = {
+				x: 4,
+				y: 5
+			}
+			const after = {
 				x: 4,
 				y: 6
 			}
 
-			expect(canPromote(type, coordinate, own)).toBe(true)
+			expect(canPromote(type, before, after, own)).toBe(true)
 		})
-		test('後手が1,5に動くときには成れない', () => {
+		test('後手の歩兵が1,5に動くときには成れない', () => {
 			const type = 'pawn'
 			const own = 'white'
-			const coordinate = {
+			const before = {
+				x: 1,
+				y: 4
+			}
+			const after = {
 				x: 1,
 				y: 5
 			}
 
-			expect(canPromote(type, coordinate, own)).toBe(false)
+			expect(canPromote(type, before, after, own)).toBe(false)
+		})
+		test('先手の銀将が4,2にいるときは4,3に動いても成れる', () => {
+			const type = 'silver'
+			const own = 'black'
+			const before = {
+				x: 4,
+				y: 2
+			}
+			const after = {
+				x: 4,
+				y: 3
+			}
+
+			expect(canPromote(type, before, after, own)).toBe(true)
+		})
+	})
+	describe('mustPromote', () => {
+		test('先手の桂馬が2段目に移動するときに成らなければならない', () => {
+			const type = 'knight'
+			const own = 'black'
+			const coordinate = {
+				x: 4,
+				y: 1
+			}
+
+			expect(mustPromote(type, coordinate, own)).toBe(true)
+		})
+		test('後手の歩兵が9段目に移動するときに成らなければならない', () => {
+			const type = 'pawn'
+			const own = 'white'
+			const coordinate = {
+				x: 8,
+				y: 8
+			}
+
+			expect(mustPromote(type, coordinate, own)).toBe(true)
+		})
+		test('先手の金将が1段目に移動するときには成らなくてもよい', () => {
+			const type = 'gold'
+			const own = 'black'
+			const coordinate = {
+				x: 2,
+				y: 0
+			}
+
+			expect(mustPromote(type, coordinate, own)).toBe(false)
 		})
 	})
 })

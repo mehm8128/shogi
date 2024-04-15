@@ -5,7 +5,8 @@ import {
 	piecesBlackHavingAtom,
 	piecesWhiteHavingAtom
 } from '@/features/board/state'
-import { useHistoryToKif } from '@/features/game/kif'
+import { getKif } from '@/features/game/kif'
+import { historiesAtom } from '@/features/game/state'
 import HavingPieces from '@/features/player/components/HavingPieces'
 import { currentPlayerAtom } from '@/features/player/state'
 import { Box, Flex, VStack } from '@kuma-ui/core'
@@ -15,7 +16,7 @@ export default function Page() {
 	const currentPlayer = useAtomValue(currentPlayerAtom)
 	const piecesBlackHaving = useAtomValue(piecesBlackHavingAtom)
 	const piecesWhiteHaving = useAtomValue(piecesWhiteHavingAtom)
-	const { getKif } = useHistoryToKif()
+	const histories = useAtomValue(historiesAtom)
 
 	return (
 		<Flex as="main" gap={100} padding={12}>
@@ -26,7 +27,7 @@ export default function Page() {
 						kif
 						<Box
 							as="textarea"
-							value={getKif()}
+							value={getKif(histories)}
 							rows={20}
 							readOnly
 							width={300}

@@ -49,8 +49,9 @@ export default function Square({
 	const canBeReleased =
 		selectedHavingPiece !== null &&
 		piece.type === null &&
-		selectedHavingPiece.type === 'pawn' &&
-		!willBeTwoPawns(currentBoard, coordinate, currentPlayer) // 二歩判定
+		(selectedHavingPiece.type === 'pawn'
+			? !willBeTwoPawns(currentBoard, coordinate, currentPlayer)
+			: true) // 二歩判定
 
 	const canBeClicked =
 		piece.own === currentPlayer || // 動かせる駒

@@ -1,5 +1,14 @@
 import { Board } from '@/features/board/schema'
-import { currentGameIndexAtom, gameAtom } from '@/features/game/state'
+import {
+	History,
+	pieceTypeToHistoryPieceTypeMapping,
+	promotedPieceTypeToHistoryPieceTypeMapping
+} from '@/features/game/schema'
+import {
+	currentGameIndexAtom,
+	gameAtom,
+	historiesAtom
+} from '@/features/game/state'
 import { canMoveBishop } from '@/features/piece/pieces/bishop'
 import { canMoveGold } from '@/features/piece/pieces/gold'
 import { canMoveKing } from '@/features/piece/pieces/king'
@@ -32,6 +41,7 @@ export const setBoardAtom = atom(
 	(get, set, newCoodinate: Coordinate, willPromote: boolean) => {
 		const currentBoard = get(currentBoardAtom)
 		const selectedPiece = get(selectedPieceAtom)
+		const history = get(historiesAtom)
 		if (selectedPiece === null) {
 			throw new Error('selectedPiece is null')
 		}
@@ -84,6 +94,22 @@ export const setBoardAtom = atom(
 			...currentBoard,
 			board: newBoard
 		})
+
+		if (selectedPiece.type === null) {
+			throw new Error('selectedPiece.type is null')
+		}
+		const newHistory: History = {
+			before: {
+				x: selectedPiece.coordinate.x,
+				y: selectedPiece.coordinate.y
+			},
+			after: newCoodinate,
+			pieceType: selectedPiece.promoted
+				? promotedPieceTypeToHistoryPieceTypeMapping[selectedPiece.type]
+				: pieceTypeToHistoryPieceTypeMapping[selectedPiece.type],
+			decorator: willPromote ? '成' : ''
+		}
+		set(historiesAtom, [...history, newHistory])
 	}
 )
 
@@ -172,6 +198,7 @@ export const releaseHavingPieceAtom = atom(
 	(get, set, coordinate: Coordinate) => {
 		const currentBoard = get(currentBoardAtom)
 		const selectedHavingPiece = get(selectedHavingPieceAtom)
+		const history = get(historiesAtom)
 		if (selectedHavingPiece === null) {
 			throw new Error('selectedHavingPiece is null')
 		}
@@ -196,5 +223,16 @@ export const releaseHavingPieceAtom = atom(
 			...currentBoard,
 			board: newBoard
 		})
+
+		if (selectedHavingPiece.type === null) {
+			throw new Error('selectedHavingPiece.type is null')
+		}
+		const newHistory: History = {
+			before: null,
+			after: coordinate,
+			pieceType: pieceTypeToHistoryPieceTypeMapping[selectedHavingPiece.type],
+			decorator: '打'
+		}
+		set(historiesAtom, [...history, newHistory])
 	}
 )

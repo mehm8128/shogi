@@ -51,7 +51,8 @@ export default function Square({
 		piece.type === null &&
 		(selectedHavingPiece.type === 'pawn'
 			? !willBeTwoPawns(currentBoard, coordinate, currentPlayer)
-			: true) // 二歩判定
+			: true) && // 二歩判定
+		!mustPromote(selectedHavingPiece.type, coordinate, currentPlayer) // 置いても移動できない場所に置いてはいけない
 
 	const canBeClicked =
 		piece.own === currentPlayer || // 動かせる駒

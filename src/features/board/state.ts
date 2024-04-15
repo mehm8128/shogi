@@ -9,15 +9,8 @@ import {
 	gameAtom,
 	historiesAtom
 } from '@/features/game/state'
-import { canMoveBishop } from '@/features/piece/pieces/bishop'
-import { canMoveGold } from '@/features/piece/pieces/gold'
-import { canMoveKing } from '@/features/piece/pieces/king'
-import { canMoveKnight } from '@/features/piece/pieces/knight'
-import { canMoveLance } from '@/features/piece/pieces/lance'
-import { canMovePawn } from '@/features/piece/pieces/pawn'
-import { canMoveRook } from '@/features/piece/pieces/rook'
-import { canMoveSilver } from '@/features/piece/pieces/silver'
 import { Coordinate, Piece, PieceWithCoordinate } from '@/features/piece/schema'
+import { getCanBeMovedCoordinates } from '@/features/piece/selector'
 import { currentPlayerAtom } from '@/features/player/state'
 import { atom } from 'jotai'
 
@@ -138,58 +131,11 @@ export const canBeMovedCoordinatesAtom = atom(get => {
 	const board = get(currentBoardAtom)
 	const currentPlayer = get(currentPlayerAtom)
 
-	if (selectedPiece === null || selectedPiece.type === null) return []
-
-	switch (selectedPiece.type) {
-		case 'king':
-			return canMoveKing(selectedPiece.coordinate, currentPlayer, board)
-		case 'rook':
-			return canMoveRook(
-				selectedPiece.coordinate,
-				currentPlayer,
-				board,
-				selectedPiece.promoted
-			)
-		case 'bishop':
-			return canMoveBishop(
-				selectedPiece.coordinate,
-				currentPlayer,
-				board,
-				selectedPiece.promoted
-			)
-		case 'gold':
-			return canMoveGold(selectedPiece.coordinate, currentPlayer, board)
-		case 'silver':
-			return canMoveSilver(
-				selectedPiece.coordinate,
-				currentPlayer,
-				board,
-				selectedPiece.promoted
-			)
-		case 'knight':
-			return canMoveKnight(
-				selectedPiece.coordinate,
-				currentPlayer,
-				board,
-				selectedPiece.promoted
-			)
-		case 'lance':
-			return canMoveLance(
-				selectedPiece.coordinate,
-				currentPlayer,
-				board,
-				selectedPiece.promoted
-			)
-		case 'pawn':
-			return canMovePawn(
-				selectedPiece.coordinate,
-				currentPlayer,
-				board,
-				selectedPiece.promoted
-			)
-		default:
-			throw new Error(`invalid piece: ${selectedPiece.type satisfies never}`)
+	if (selectedPiece === null) {
+		return []
 	}
+
+	return getCanBeMovedCoordinates(selectedPiece, currentPlayer, board)
 })
 
 export const selectedHavingPieceAtom = atom<Piece | null>(null)

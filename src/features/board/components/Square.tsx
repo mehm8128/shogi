@@ -8,6 +8,8 @@ import {
 	selectedPieceAtom,
 	setBoardAtom
 } from '@/features/board/state'
+import { checkmate } from '@/features/game/checkmate'
+import { finishedAtom } from '@/features/game/state'
 import PieceComp from '@/features/piece/components/Piece'
 import { willBeTwoPawns } from '@/features/piece/pieces/pawn'
 import { Coordinate, Piece } from '@/features/piece/schema'
@@ -33,6 +35,7 @@ export default function Square({
 	const currentPlayer = useAtomValue(currentPlayerAtom)
 	const changeCurrentPlayer = useSetAtom(changeCurrentPlayerAtom)
 	const releaseHavingPiece = useSetAtom(releaseHavingPieceAtom)
+	const setFinished = useSetAtom(finishedAtom)
 	const [piecesBlackHaving, setPiecesBlackHaving] = useAtom(
 		piecesBlackHavingAtom
 	)
@@ -93,6 +96,12 @@ export default function Square({
 			setBoard(coordinate, willBePromoted)
 			setSelectedPiece(null)
 			changeCurrentPlayer()
+			if (checkmate(currentBoard)) {
+				alert(
+					`詰みました。${currentPlayer === 'black' ? '先手' : '後手'}の勝ちです`
+				)
+				setFinished(true)
+			}
 			return
 		}
 		if (canBeReleased) {
@@ -110,6 +119,12 @@ export default function Square({
 				)
 			}
 			changeCurrentPlayer()
+			if (checkmate(currentBoard)) {
+				alert(
+					`詰みました。${currentPlayer === 'black' ? '先手' : '後手'}の勝ちです`
+				)
+				setFinished(true)
+			}
 			return
 		}
 

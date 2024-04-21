@@ -81,7 +81,7 @@ function Player({
 			{playerTypeToJpMapping[playerType]}
 			<Button
 				onClick={handleSurrender}
-				disabled={finished || currentPlayer === playerType}
+				disabled={finished || currentPlayer !== playerType}
 			>
 				投了
 			</Button>

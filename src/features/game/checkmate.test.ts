@@ -91,7 +91,6 @@ describe('checkmate', () => {
 			own: 'black',
 			promoted: false
 		})
-		console.log(board5)
 
 		expect(checkmate({ board: board5 }, 'white')).toBe(true)
 	})

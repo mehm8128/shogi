@@ -162,7 +162,6 @@ export default function Square({
 				onClick={handleClick}
 			>
 				{piece.own !== null && <PieceComp piece={piece} />}
-				{coordinate.x},{coordinate.y}
 			</Button>
 		</VStack>
 	)

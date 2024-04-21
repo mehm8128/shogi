@@ -29,7 +29,7 @@ export default function Page() {
 	return (
 		<Flex as="main" gap={100} padding={12}>
 			<Box>
-				<Box>現在の手番: {currentPlayer}</Box>
+				<Box>現在の手番: {playerTypeToJpMapping[currentPlayer]}</Box>
 				<Button onClick={() => setBocchiMode(!bocchiMode)}>ぼっちモード</Button>
 				<Box>ぼっちモード: {bocchiMode ? 'オン' : 'オフ'}</Box>
 				<Box>

@@ -14,6 +14,7 @@ import PieceComp from '@/features/piece/components/Piece'
 import { willBeTwoPawns } from '@/features/piece/pieces/pawn'
 import { Coordinate, Piece } from '@/features/piece/schema'
 import { canPromote, mustPromote } from '@/features/piece/validate'
+import { playerTypeToJpMapping } from '@/features/player/const'
 import {
 	changeCurrentPlayerAtom,
 	currentPlayerAtom
@@ -96,10 +97,8 @@ export default function Square({
 			setBoard(coordinate, willBePromoted)
 			setSelectedPiece(null)
 			changeCurrentPlayer()
-			if (checkmate(currentBoard)) {
-				alert(
-					`詰みました。${currentPlayer === 'black' ? '先手' : '後手'}の勝ちです`
-				)
+			if (checkmate(currentBoard, currentPlayer)) {
+				alert(`詰みました。${playerTypeToJpMapping[currentPlayer]}の勝ちです`)
 				setFinished(true)
 			}
 			return
@@ -119,10 +118,8 @@ export default function Square({
 				)
 			}
 			changeCurrentPlayer()
-			if (checkmate(currentBoard)) {
-				alert(
-					`詰みました。${currentPlayer === 'black' ? '先手' : '後手'}の勝ちです`
-				)
+			if (checkmate(currentBoard, currentPlayer)) {
+				alert(`詰みました。${playerTypeToJpMapping[currentPlayer]}の勝ちです`)
 				setFinished(true)
 			}
 			return

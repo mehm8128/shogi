@@ -60,6 +60,6 @@ describe('getKif', () => {
 7 2三飛成(25)
 `
 
-		expect(getKif(histories)).toBe(expected)
+		expect(getKif(histories, false)).toBe(expected)
 	})
 })

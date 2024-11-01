@@ -12,8 +12,8 @@ importers:
         specifier: ^1.5.6
         version: 1.5.6(@types/react@18.2.58)(next@14.1.0(@babel/core@7.23.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
       jotai:
-        specifier: ^2.6.5
-        version: 2.6.5(@types/react@18.2.58)(react@18.2.0)
+        specifier: ^2.10.1
+        version: 2.10.1(@types/react@18.2.58)(react@18.2.0)
       next:
         specifier: ^14.1.0
         version: 14.1.0(@babel/core@7.23.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -4122,8 +4122,8 @@ packages:
     resolution: {integrity: sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==}
     hasBin: true
 
-  jotai@2.6.5:
-    resolution: {integrity: sha512-T+yvY42GXKomvJYqs+NeTH0da9Z1tQ3Qk3zppPHIWnvmOBKpN6Qd4j8h/oo9dwxs3w/Z5r6Kk0I8h6z5orQ/HQ==}
+  jotai@2.10.1:
+    resolution: {integrity: sha512-4FycO+BOTl2auLyF2Chvi6KTDqdsdDDtpaL/WHQMs8f3KS1E3loiUShQzAzFA/sMU5cJ0hz/RT1xum9YbG/zaA==}
     engines: {node: '>=12.20.0'}
     peerDependencies:
       '@types/react': '>=17.0.0'
@@ -11025,7 +11025,7 @@ snapshots:
 
   jiti@1.21.0: {}
 
-  jotai@2.6.5(@types/react@18.2.58)(react@18.2.0):
+  jotai@2.10.1(@types/react@18.2.58)(react@18.2.0):
     optionalDependencies:
       '@types/react': 18.2.58
       react: 18.2.0
